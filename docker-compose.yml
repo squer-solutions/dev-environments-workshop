@@ -43,3 +43,31 @@ services:
       - "4040:8080"
     depends_on:
       - redpanda
+
+  postgres:
+    container_name: squer-trading_postgres
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+
+  redis:
+    container_name: squer-trading_redis
+    image: docker.io/bitnami/redis:7.0
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '6379:6379'
+
+  redis-commander:
+    container_name: squer-trading_redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8089:8081"
