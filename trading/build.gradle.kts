@@ -65,9 +65,6 @@ micronaut {
         incremental(true)
         annotations("io.squer.*")
     }
-    testResources {
-        sharedServer.set(true)
-    }
 }
 
 
