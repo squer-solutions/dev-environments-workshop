@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: io.squer
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle_kotlin
+features: [annotation-api, app-name, data, data-r2dbc, gradle, http-client, jackson-databind, junit, kafka, kotlin, kotlin-application, kotlin-build, logback, micronaut-build, netty-server, postgres, properties, r2dbc, readme, redis-lettuce, shade, testcontainers]
