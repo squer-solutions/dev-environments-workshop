@@ -9,6 +9,8 @@
         </encoder>
     </appender>
 
+    <logger name="io.squer" level="INFO"/>
+
     <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
