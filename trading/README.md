@@ -1,38 +1,14 @@
-## Micronaut 3.7.4 Documentation
+# Dev Setups
 
-- [User Guide](https://docs.micronaut.io/3.7.4/guide/index.html)
-- [API Reference](https://docs.micronaut.io/3.7.4/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/3.7.4/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+In the greater context of this repository, this is the "target application" that we're trying to optimise the dev-setup for.
+It has various dependencies it needs to function properly and it is our job to supply them with various tools.
 
-- [Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)
-## Feature http-client documentation
+Additionally, the application goes to showcase how one could use Micronaut with Kotlin Coroutines to arrive at an async/await
+style programming model.
 
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+## Developing
 
-
-## Feature r2dbc documentation
-
-- [Micronaut R2DBC documentation](https://micronaut-projects.github.io/micronaut-r2dbc/latest/guide/)
-
-- [https://r2dbc.io](https://r2dbc.io)
-
-
-## Feature data-r2dbc documentation
-
-- [Micronaut Data R2DBC documentation](https://micronaut-projects.github.io/micronaut-data/latest/guide/#dbc)
-
-- [https://r2dbc.io](https://r2dbc.io)
-
-
-## Feature kafka documentation
-
-- [Micronaut Kafka Messaging documentation](https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html)
-
-
-## Feature testcontainers documentation
-
-- [https://www.testcontainers.org/](https://www.testcontainers.org/)
-
-
+This repository uses KtLint to support uniform code-styling. It is suggested to use the pre-commit hook delivered with it.
+```sh
+./gradlew addKtlintFormatGitPreCommitHook
+```
