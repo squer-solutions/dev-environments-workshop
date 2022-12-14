@@ -1,0 +1,18 @@
+#Fri Nov 25 13:55:58 GMT 2022
+micronaut:
+  application:
+    name: trading
+r2dbc:
+  datasources:
+    default:
+      username: postgres
+      dialect: POSTGRES
+      url: r2dbc:postgresql://localhost:5432/postgres
+      password: postgres
+      schema-generate: CREATE_DROP
+netty:
+  default:
+    allocator:
+      max-order: 3
+redis:
+  uri: redis://localhost:6379
