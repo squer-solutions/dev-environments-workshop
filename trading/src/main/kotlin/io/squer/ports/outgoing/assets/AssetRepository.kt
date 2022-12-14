@@ -13,6 +13,6 @@ interface AssetRepository : CoroutineCrudRepository<AssetEntity, UUID>
 @MappedEntity
 class AssetEntity(
     @field:Id
-    var id: UUID,
+    val id: UUID,
     val symbol: String,
 )

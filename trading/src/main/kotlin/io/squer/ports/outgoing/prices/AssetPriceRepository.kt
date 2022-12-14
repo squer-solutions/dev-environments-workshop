@@ -17,7 +17,7 @@ interface AssetPriceRepository : CoroutineCrudRepository<AssetPriceEntity, UUID>
 @MappedEntity
 data class AssetPriceEntity(
     @field:Id
-    var id: UUID,
+    val id: UUID,
     val price: BigDecimal,
     val assetId: UUID,
     val createdAt: LocalDateTime

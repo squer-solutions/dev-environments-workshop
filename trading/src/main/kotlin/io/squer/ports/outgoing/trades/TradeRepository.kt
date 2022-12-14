@@ -15,7 +15,7 @@ interface TradeRepository : CoroutineCrudRepository<TradeEntity, UUID>
 @MappedEntity
 class TradeEntity(
     @field:Id
-    var id: UUID,
+    val id: UUID,
     val amount: BigDecimal,
     val atPrice: BigDecimal,
     val createdAt: LocalDateTime,
