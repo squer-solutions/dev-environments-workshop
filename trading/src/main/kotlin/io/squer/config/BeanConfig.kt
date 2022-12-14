@@ -8,6 +8,6 @@ import java.time.Clock
 class BeanConfig {
     @Singleton
     fun clock(): Clock {
-        return Clock.systemUTC();
+        return Clock.systemUTC()
     }
 }
