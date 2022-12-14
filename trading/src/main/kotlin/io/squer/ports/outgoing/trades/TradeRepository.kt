@@ -7,10 +7,10 @@ import io.micronaut.data.r2dbc.annotation.R2dbcRepository
 import io.micronaut.data.repository.kotlin.CoroutineCrudRepository
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 @R2dbcRepository(dialect = Dialect.POSTGRES)
-interface TradeRepository: CoroutineCrudRepository<TradeEntity, UUID>
+interface TradeRepository : CoroutineCrudRepository<TradeEntity, UUID>
 
 @MappedEntity
 class TradeEntity(

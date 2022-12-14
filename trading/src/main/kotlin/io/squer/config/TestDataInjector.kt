@@ -13,7 +13,7 @@ import kotlinx.coroutines.runBlocking
 import java.math.BigDecimal
 import java.time.Clock
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 @Context
 @Singleton
