@@ -1,4 +1,4 @@
-package io.squer.view
+package io.squer.ports.incoming
 
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Controller
@@ -8,6 +8,8 @@ import io.squer.ports.outgoing.assets.AssetRepository
 import io.squer.ports.outgoing.prices.AssetPriceRepository
 import io.squer.ports.outgoing.trades.TradeEntity
 import io.squer.ports.outgoing.trades.TradeRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import java.math.BigDecimal
 import java.time.Clock
 import java.time.LocalDateTime
@@ -23,20 +25,28 @@ class TradeController(
 ) {
     @Post("/trade")
     suspend fun trade(request: TradeReqeuestDTO): TradeResponseDTO {
-        val asset = assetRepository.findById(request.assetId)
-            ?: throw HttpStatusException(HttpStatus.NOT_FOUND, "Asset not found.")
-        val latestPrice = assetPriceRepository.findByAssetIdOrderByCreatedAtDesc(asset.id).getOrNull(0)?.price
-            ?: throw HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No prices available")
+        /* By default, Coroutines execute immediately. Using async { } allows me to schedule both Coroutines
+        to run concurrently. */
+        return coroutineScope {
+            val confirmedAssetId = async {
+                assetRepository.findById(request.assetId)?.id
+                    ?: throw HttpStatusException(HttpStatus.NOT_FOUND, "Asset not found.")
+            }
+            val latestPrice = async {
+                assetPriceRepository.findByAssetIdOrderByCreatedAtDesc(request.assetId).getOrNull(0)?.price
+                    ?: throw HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No prices available")
+            }
 
-        return tradeRepository.save(
-            TradeEntity(
-                id = UUID.randomUUID(),
-                atPrice = latestPrice,
-                amount = request.amountAsset,
-                assetId = asset.id,
-                createdAt = LocalDateTime.now(clock),
-            )
-        ).toTradeResponseDTO()
+            return@coroutineScope tradeRepository.save(
+                TradeEntity(
+                    id = UUID.randomUUID(),
+                    assetId = confirmedAssetId.await(),
+                    atPrice = latestPrice.await(),
+                    amount = request.amountAsset,
+                    createdAt = LocalDateTime.now(clock),
+                )
+            ).toTradeResponseDTO()
+        }
     }
 }
 
