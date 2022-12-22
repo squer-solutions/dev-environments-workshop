@@ -71,3 +71,12 @@ services:
       - REDIS_HOSTS=local:redis:6379
     ports:
       - "8089:8081"
+
+  prices-mock:
+    container_name: squer-trading_prices-mock
+    hostname: price-mock
+    build:
+      context: ./trading-mock
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8081"
