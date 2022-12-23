@@ -6,6 +6,8 @@ import io.squer.trading.prices.models.Price
 import jakarta.inject.Singleton
 import kotlin.random.Random
 import org.slf4j.LoggerFactory
+import java.math.BigDecimal
+import java.time.LocalDateTime
 import java.util.*
 
 @Singleton
@@ -13,13 +15,18 @@ class PricePublishingJobs(private val pricePublisher: PricePublisher) {
 
     @Scheduled(fixedDelay = "10s")
     fun publishEveryThenSeconds() {
-        val price = Price("baseId", "quoteId", Random.nextDouble(0.0, 100.0))
+        val price = Price(assetIds.random(), BigDecimal.valueOf(Random.nextDouble(0.0, 100.0)), LocalDateTime.now())
         LOG.info("Publishing new price [price={}]", price)
         pricePublisher.publish(UUID.randomUUID().toString(), price)
     }
 
     companion object {
         private val LOG = LoggerFactory.getLogger(PricePublishingJobs::class.java)
+        private val assetIds = listOf(
+                UUID.fromString("79fdc629-9d8d-46aa-9ddb-7a06350bc287"), // BTC
+                UUID.fromString("79fdc629-9d8d-46aa-9ddb-7a06350bc287"), // ETH
+                UUID.fromString("79fdc629-9d8d-46aa-9ddb-7a06350bc287") // GRT
+        )
     }
 
 }

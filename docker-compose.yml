@@ -78,5 +78,9 @@ services:
     build:
       context: ./trading-mock
       dockerfile: Dockerfile
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: redpanda:29092
     ports:
       - "8090:8081"
+    depends_on:
+      - redpanda

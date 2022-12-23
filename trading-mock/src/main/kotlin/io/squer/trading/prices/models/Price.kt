@@ -1,3 +1,7 @@
 package io.squer.trading.prices.models
 
-data class Price(val baseId: String, val quoteId: String, val price: Double)
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import java.util.UUID
+
+data class Price(val assetId: UUID, val price: BigDecimal, val createdAt: LocalDateTime)
