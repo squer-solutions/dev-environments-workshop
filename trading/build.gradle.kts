@@ -31,9 +31,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
-    testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:r2dbc")
-    testImplementation("org.testcontainers:testcontainers")
     implementation("io.micronaut:micronaut-validation")
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
