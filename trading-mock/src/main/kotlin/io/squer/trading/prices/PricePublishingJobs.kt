@@ -14,11 +14,12 @@ import java.util.*
 class PricePublishingJobs(private val pricePublisher: PricePublisher) {
 
     @Scheduled(fixedDelay = "10s")
-    fun publishEveryThenSeconds() {
-        val assetId = assetIds.random()
-        val price = Price(assetId, BigDecimal.valueOf(Random.nextDouble(0.0, 100.0)), LocalDateTime.now())
-        LOG.info("Publishing new price [price={}]", price)
-        pricePublisher.publish(assetId, price)
+    fun publishEveryTenSeconds() {
+        assetIds.forEach {
+            val price = Price(it, BigDecimal.valueOf(Random.nextDouble(0.0, 100.0)), LocalDateTime.now())
+            LOG.info("Publishing new price [price={}]", price)
+            pricePublisher.publish(it, price)
+        }
     }
 
     companion object {
