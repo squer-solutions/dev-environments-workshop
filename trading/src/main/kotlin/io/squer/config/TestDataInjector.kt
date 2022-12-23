@@ -36,13 +36,13 @@ class TestDataInjector(
                 ),
                 assetRepository.save(
                     AssetEntity(
-                        id = UUID.fromString("79fdc629-9d8d-46aa-9ddb-7a06350bc287"),
+                        id = UUID.fromString("caf419e9-4dfb-4816-b34c-a9a15f0fbd17"),
                         symbol = "ETH",
                     )
                 ),
                 assetRepository.save(
                     AssetEntity(
-                        id = UUID.fromString("79fdc629-9d8d-46aa-9ddb-7a06350bc287"),
+                        id = UUID.fromString("379f204d-a81e-45e9-9e07-d7cf5c96e38f"),
                         symbol = "GRT",
                     )
                 )
