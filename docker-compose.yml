@@ -18,6 +18,12 @@ services:
       - 9644:9644
       - 29092:29092
 
+  redpanda-setup:
+    image: docker.redpanda.com/vectorized/redpanda:latest
+    command: topic create squer-trading-prices --brokers redpanda:29092
+    depends_on:
+      - redpanda
+
   console:
     image: docker.redpanda.com/vectorized/console:latest
     entrypoint: /bin/sh
