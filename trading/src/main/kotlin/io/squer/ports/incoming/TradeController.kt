@@ -24,7 +24,7 @@ class TradeController(
     private val tradeRepository: TradeRepository
 ) {
     @Post("/trade")
-    suspend fun trade(request: TradeReqeuestDTO): TradeResponseDTO {
+    suspend fun trade(request: TradeRequestDTO): TradeResponseDTO {
         /* By default, Coroutines execute immediately. Using async { } allows me to schedule both Coroutines
         to run concurrently. */
         return coroutineScope {
@@ -50,7 +50,7 @@ class TradeController(
     }
 }
 
-data class TradeReqeuestDTO(
+data class TradeRequestDTO(
     val amountAsset: BigDecimal,
     val assetId: UUID,
 )
