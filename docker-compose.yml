@@ -1,6 +1,7 @@
 version: '3.7'
 services:
   redpanda:
+    container_name: squer-trading_redpanda
     image: docker.redpanda.com/vectorized/redpanda:latest
     command:
       - redpanda start
@@ -17,8 +18,22 @@ services:
       - 9092:9092
       - 9644:9644
       - 29092:29092
+    healthcheck:
+      test: ["CMD", "rpk", "topic", "list", "--brokers", "redpanda:29092"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+
+  redpanda-setup:
+    container_name: squer-trading_redpanda-setup
+    image: docker.redpanda.com/vectorized/redpanda:latest
+    command: topic create squer-trading-prices --brokers redpanda:29092
+    depends_on:
+      redpanda:
+        condition: service_healthy
 
   console:
+    container_name: squer-trading_redpanda-console
     image: docker.redpanda.com/vectorized/console:latest
     entrypoint: /bin/sh
     command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
@@ -71,3 +86,16 @@ services:
       - REDIS_HOSTS=local:redis:6379
     ports:
       - "8089:8081"
+
+  prices-mock:
+    container_name: squer-trading_prices-mock
+    hostname: price-mock
+    build:
+      context: ./trading-mock
+      dockerfile: build/docker/main/Dockerfile
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: redpanda:29092
+    ports:
+      - "8090:8090"
+    depends_on:
+      - redpanda-setup

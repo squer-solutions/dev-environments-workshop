@@ -1,0 +1,13 @@
+micronaut:
+  application:
+    name: tradingMock
+  server:
+    port: 8090
+netty:
+  default:
+    allocator:
+      max-order: 3
+
+kafka:
+  bootstrap:
+    servers: ${KAFKA_BOOTSTRAP_SERVERS:`localhost:9092`}
