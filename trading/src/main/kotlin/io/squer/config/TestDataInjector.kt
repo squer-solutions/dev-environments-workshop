@@ -17,7 +17,7 @@ import java.util.UUID
 
 @Context
 @Singleton
-@Requires(notEnv = ["production", "staging"])
+@Requires(env = ["local"])
 class TestDataInjector(
     private val assetRepository: AssetRepository,
     private val assetPriceRepository: AssetPriceRepository,
