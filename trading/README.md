@@ -12,3 +12,8 @@ This repository uses KtLint to support uniform code-styling. It is suggested to 
 ```sh
 ./gradlew addKtlintFormatGitPreCommitHook
 ```
+
+## Running
+For running the application on your machine, set the environment to local.
+
+![img.png](setup.png)
