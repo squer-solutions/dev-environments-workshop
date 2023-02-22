@@ -91,8 +91,8 @@ services:
     container_name: squer-trading_prices-mock
     hostname: price-mock
     build:
-      context: ./trading-mock
-      dockerfile: build/docker/main/Dockerfile
+      context: ./trading-mock/build/docker/main
+      dockerfile: Dockerfile
     environment:
       KAFKA_BOOTSTRAP_SERVERS: redpanda:29092
     ports:
