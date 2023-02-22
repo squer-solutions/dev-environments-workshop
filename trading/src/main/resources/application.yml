@@ -19,3 +19,9 @@ netty:
       max-order: 3
 redis:
   uri: redis://localhost:6379
+  caches:
+    prices:
+      charset: 'UTF-8'
+      expire-after-write: 5m
+      key-serializer: io.micronaut.jackson.serialize.JacksonObjectSerializer
+      value-serializer: io.micronaut.jackson.serialize.JacksonObjectSerializer

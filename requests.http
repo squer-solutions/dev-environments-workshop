@@ -1,0 +1,8 @@
+
+POST localhost:8080/trade
+Content-Type: application/json
+
+{
+  "assetId": "379f204d-a81e-45e9-9e07-d7cf5c96e38f",
+  "amountAsset": 10
+}

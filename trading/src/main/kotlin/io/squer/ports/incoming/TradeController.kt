@@ -29,12 +29,11 @@ class TradeController(
         to run concurrently. */
         return coroutineScope {
             val confirmedAssetId = async {
-                assetRepository.findById(request.assetId)?.id
+                assetRepository.findById(UUID.fromString(request.assetId))?.id
                     ?: throw HttpStatusException(HttpStatus.NOT_FOUND, "Asset not found.")
             }
             val latestPrice = async {
-                assetPriceRepository.findByAssetIdOrderByCreatedAtDesc(request.assetId).getOrNull(0)?.price
-                    ?: throw HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No prices available")
+                assetPriceRepository.getLatestPrice(request.assetId)?.price ?: throw HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No prices available")
             }
 
             return@coroutineScope tradeRepository.save(
@@ -52,13 +51,13 @@ class TradeController(
 
 data class TradeRequestDTO(
     val amountAsset: BigDecimal,
-    val assetId: UUID,
+    val assetId: String,
 )
 
 data class TradeResponseDTO(
     val id: UUID,
     val amountAsset: BigDecimal,
-    val assetId: UUID,
+    val assetId: String,
     val amountFiat: BigDecimal,
     val executedAt: Long,
 )
@@ -67,7 +66,7 @@ fun TradeEntity.toTradeResponseDTO(): TradeResponseDTO {
     return TradeResponseDTO(
         id = this.id,
         amountAsset = this.amount,
-        assetId = this.assetId,
+        assetId = this.assetId.toString(),
         executedAt = this.createdAt.toEpochSecond(ZoneOffset.UTC),
         amountFiat = this.amount * this.atPrice
     )

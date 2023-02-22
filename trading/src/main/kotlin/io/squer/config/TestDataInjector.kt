@@ -6,7 +6,6 @@ import io.micronaut.runtime.event.annotation.EventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
 import io.squer.ports.outgoing.assets.AssetEntity
 import io.squer.ports.outgoing.assets.AssetRepository
-import io.squer.ports.outgoing.prices.AssetPriceEntity
 import io.squer.ports.outgoing.prices.AssetPriceRepository
 import jakarta.inject.Singleton
 import kotlinx.coroutines.runBlocking
@@ -47,13 +46,10 @@ class TestDataInjector(
                     )
                 )
             ).map {
-                assetPriceRepository.save(
-                    AssetPriceEntity(
-                        id = UUID.randomUUID(),
-                        price = BigDecimal("12"),
-                        assetId = it.id,
-                        createdAt = LocalDateTime.now(clock)
-                    )
+                assetPriceRepository.persistPrice(
+                    price = BigDecimal("12"),
+                    assetId = it.id.toString(),
+                    createdAt = LocalDateTime.now(clock)
                 )
             }
         }

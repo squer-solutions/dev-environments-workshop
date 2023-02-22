@@ -2,7 +2,6 @@ package io.squer.ports.incoming
 
 import io.micronaut.configuration.kafka.annotation.KafkaListener
 import io.micronaut.configuration.kafka.annotation.Topic
-import io.squer.ports.outgoing.prices.AssetPriceEntity
 import io.squer.ports.outgoing.prices.AssetPriceRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope.coroutineContext
@@ -20,13 +19,10 @@ class PriceListener(
     fun receivePrice(price: Price): Mono<Unit> {
         return Mono.fromCallable {
             CoroutineScope(coroutineContext).launch {
-                assetPriceRepository.save(
-                    AssetPriceEntity(
-                        id = UUID.randomUUID(),
-                        price = price.price,
-                        assetId = price.assetId,
-                        createdAt = LocalDateTime.now()
-                    )
+                assetPriceRepository.persistPrice(
+                    price = price.price,
+                    assetId = price.assetId.toString(),
+                    createdAt = LocalDateTime.now()
                 )
             }
         }
