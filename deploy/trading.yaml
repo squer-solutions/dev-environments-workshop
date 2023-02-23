@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: squer-trading
+  labels:
+    app: squer-trading
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: squer-trading
+  template:
+    metadata:
+      labels:
+        app: squer-trading
+    spec:
+      containers:
+        - name: squer-trading
+          image: trading
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MICRONAUT_ENVIRONMENTS
+              value: "local"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: squer-trading
+spec:
+  selector:
+    app: squer-trading
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

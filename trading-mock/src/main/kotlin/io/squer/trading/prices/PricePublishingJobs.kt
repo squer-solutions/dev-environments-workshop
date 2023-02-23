@@ -15,6 +15,7 @@ class PricePublishingJobs(private val pricePublisher: PricePublisher) {
 
     @Scheduled(fixedDelay = "10s")
     fun publishEveryTenSeconds() {
+        LOG.info("Publishing prices.")
         assetIds.forEach {
             val price = Price(it, BigDecimal.valueOf(Random.nextDouble(0.0, 100.0)), LocalDateTime.now())
             LOG.info("Publishing new price [price={}]", price)

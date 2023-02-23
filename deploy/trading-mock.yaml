@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: squer-trading-mock
+  labels:
+    app: squer-trading-mock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: squer-trading-mock
+  template:
+    metadata:
+      labels:
+        app: squer-trading-mock
+    spec:
+      containers:
+        - name: squer-trading-mock
+          image: trading-mock
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: squer-trading-mock
+spec:
+  selector:
+    app: squer-trading-mock
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

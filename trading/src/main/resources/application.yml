@@ -7,18 +7,18 @@ r2dbc:
     default:
       username: postgres
       dialect: POSTGRES
-      url: r2dbc:postgresql://localhost:5432/postgres
+      url: r2dbc:postgresql://postgres:5432/postgres
       password: postgres
       schema-generate: CREATE_DROP
 kafka:
   bootstrap:
-    servers: ${KAFKA_BOOTSTRAP_SERVERS:`localhost:9092`}
+    servers: ${KAFKA_BOOTSTRAP_SERVERS:`http://redpanda:29092`}
 netty:
   default:
     allocator:
       max-order: 3
 redis:
-  uri: redis://localhost:6379
+  uri: redis://redis:6379
   caches:
     prices:
       charset: 'UTF-8'

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redpanda-console
+  labels:
+    app: redpanda-console
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redpanda-console
+  template:
+    metadata:
+      labels:
+        app: redpanda-console
+    spec:
+      containers:
+        - name: redpanda-console
+          image: docker.redpanda.com/vectorized/console:latest
+          volumeMounts:
+            - mountPath: /tmp/config.yml
+              name: mnt
+              subPath: file-from-cfgmap
+          env:
+            - name: CONFIG_FILEPATH
+              value: /tmp/config.yml
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: mnt
+          configMap:
+            name: redpanda-console-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redpanda-console
+spec:
+  selector:
+    app: redpanda-console
+  ports:
+    - protocol: TCP
+      port: 4040
+      targetPort: 8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redpanda-console-config
+data:
+  file-from-cfgmap: |
+    kafka:
+      brokers: ["redpanda:29092"]
+      schemaRegistry:
+        enabled: true
+        urls: ["http://redpanda:8081"]
+    redpanda:
+      adminApi:
+        enabled: true
+        urls: ["http://redpanda:9644"]
