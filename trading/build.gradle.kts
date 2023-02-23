@@ -46,11 +46,6 @@ application {
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
 }
-configure<SourceSetContainer> {
-    named("test") {
-        java.srcDir("src/test/kotlin")
-    }
-}
 
 tasks {
     compileKotlin {
