@@ -1,42 +1,48 @@
 package io.squer.devenv
 
 import io.squer.devenv.containers.*
+import org.slf4j.LoggerFactory
 import org.testcontainers.containers.Network.newNetwork
 
 fun main() {
 
-    init()
+    DevEnv().setupDevEnv()
 
-    while (true) {
-    }
-
+    while (true) {}
 }
 
-fun init() {
-    val defaultNetwork = newNetwork()
+class DevEnv {
+    fun setupDevEnv() {
+        LOG.info("Creating new shared network...")
+        val defaultNetwork = newNetwork()
 
-    // init containers
-    val postgres = Postgres(defaultNetwork)
-    val redis = Redis(defaultNetwork)
-    val redisCommander = RedisCommander(defaultNetwork)
-    val redpanda = Redpanda(defaultNetwork)
-    val redpandaConsole = RedpandaConsole(defaultNetwork)
-    val pricesMock = PricesMock(defaultNetwork)
 
-    // starting containers
-    postgres.start()
+        LOG.info("Initializing containers...")
+        val postgres = Postgres(defaultNetwork)
+        val redis = Redis(defaultNetwork)
+        val redisCommander = RedisCommander(defaultNetwork)
+        val redpanda = Redpanda(defaultNetwork)
+        val redpandaConsole = RedpandaConsole(defaultNetwork)
+        val pricesMock = PricesMock(defaultNetwork)
 
-    redis.start()
+        LOG.info("Starting containers...")
+        postgres.start()
 
-    redisCommander.start()
+        redis.start()
 
-    redpanda.start()
-    redpanda.createTopics()
+        redisCommander.start()
 
-    redpandaConsole.start()
+        redpanda.start()
+        redpanda.createTopics()
 
-    pricesMock.start()
+        redpandaConsole.start()
 
-    // done
+        pricesMock.start()
 
+        LOG.info("Setup complete. Containers will shut down on application exit.")
+    }
+
+    companion object {
+        private val LOG = LoggerFactory.getLogger(DevEnv::class.java)
+    }
 }

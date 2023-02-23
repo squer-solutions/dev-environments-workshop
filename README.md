@@ -18,3 +18,8 @@ Then we can build the docker image itself:
 docker build -f build/docker/main/Dockerfile -t squer-trading-mock ./build/docker/main
 ```
 
+To start the local setup with testcontainers you just need to execute `main()` 
+in _trading/src/test/kotlin/io/squer/devenv/DevEnv.kt_.
+
+This will initialize and start all the necessary containers that the main application will then connect to when run.
+
