@@ -36,7 +36,6 @@ dependencies {
     implementation("io.micronaut.redis:micronaut-redis-lettuce")
 
     testImplementation("org.testcontainers:testcontainers")
-    testImplementation("org.testcontainers:redpanda")
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
@@ -79,8 +78,4 @@ micronaut {
         incremental(true)
         annotations("io.squer.*")
     }
-}
-
-task("execute", JavaExec::class) {
-    mainClass.set("io.squer.devenv.DevEnvKt")
 }

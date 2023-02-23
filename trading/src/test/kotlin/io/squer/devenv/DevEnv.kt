@@ -1,21 +1,42 @@
 package io.squer.devenv
 
-import io.squer.devenv.containers.Postgres
-import io.squer.devenv.containers.Redis
-import io.squer.devenv.containers.RedisCommander
+import io.squer.devenv.containers.*
+import org.testcontainers.containers.Network.newNetwork
 
 fun main() {
 
-//    val postgres = Postgres.getInstance()
-//    postgres.start()
-//
-//    val redis = Redis.getInstance()
-//    redis.start()
-//
-//    val redisCommander = RedisCommander.getInstance(redis)
-//    redisCommander.start()
-//
-//    while (true) {
-//    }
+    init()
+
+    while (true) {
+    }
+
+}
+
+fun init() {
+    val defaultNetwork = newNetwork()
+
+    // init containers
+    val postgres = Postgres(defaultNetwork)
+    val redis = Redis(defaultNetwork)
+    val redisCommander = RedisCommander(defaultNetwork)
+    val redpanda = Redpanda(defaultNetwork)
+    val redpandaConsole = RedpandaConsole(defaultNetwork)
+    val pricesMock = PricesMock(defaultNetwork)
+
+    // starting containers
+    postgres.start()
+
+    redis.start()
+
+    redisCommander.start()
+
+    redpanda.start()
+    redpanda.createTopics()
+
+    redpandaConsole.start()
+
+    pricesMock.start()
+
+    // done
 
 }
