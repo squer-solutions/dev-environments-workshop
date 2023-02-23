@@ -24,7 +24,6 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-r2dbc")
     implementation("io.micronaut.kafka:micronaut-kafka")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
-    implementation("io.micronaut.redis:micronaut-redis-lettuce")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
@@ -32,6 +31,9 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
     implementation("io.micronaut:micronaut-validation")
+
+    implementation("io.micronaut.cache:micronaut-cache-core")
+    implementation("io.micronaut.redis:micronaut-redis-lettuce")
 
     testImplementation("org.testcontainers:testcontainers")
     testImplementation("org.testcontainers:redpanda")
@@ -63,6 +65,12 @@ tasks {
         }
     }
 }
+
+allOpen {
+    annotation("io.micronaut.cache.annotation.Cacheable")
+    annotation("jakarta.inject.Singleton")
+}
+
 graalvmNative.toolchainDetection.set(false)
 micronaut {
     runtime("netty")

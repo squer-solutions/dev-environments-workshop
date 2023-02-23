@@ -10,9 +10,18 @@ r2dbc:
       url: r2dbc:postgresql://localhost:5432/postgres
       password: postgres
       schema-generate: CREATE_DROP
+kafka:
+  bootstrap:
+    servers: ${KAFKA_BOOTSTRAP_SERVERS:`localhost:9092`}
 netty:
   default:
     allocator:
       max-order: 3
 redis:
   uri: redis://localhost:6379
+  caches:
+    prices:
+      charset: 'UTF-8'
+      expire-after-write: 5m
+      key-serializer: io.micronaut.jackson.serialize.JacksonObjectSerializer
+      value-serializer: io.micronaut.jackson.serialize.JacksonObjectSerializer
