@@ -33,6 +33,9 @@ dependencies {
     runtimeOnly("org.postgresql:r2dbc-postgresql")
     implementation("io.micronaut:micronaut-validation")
 
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:redpanda")
+
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
@@ -41,6 +44,11 @@ application {
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
+}
+configure<SourceSetContainer> {
+    named("test") {
+        java.srcDir("src/test/kotlin")
+    }
 }
 
 tasks {
@@ -63,4 +71,8 @@ micronaut {
         incremental(true)
         annotations("io.squer.*")
     }
+}
+
+task("execute", JavaExec::class) {
+    mainClass.set("io.squer.devenv.DevEnvKt")
 }
