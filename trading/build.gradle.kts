@@ -38,6 +38,12 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
+tasks {
+    dockerfile {
+        baseImage("openjdk:17.0.2")
+    }
+}
+
 application {
     mainClass.set("io.squer.ApplicationKt")
 }
