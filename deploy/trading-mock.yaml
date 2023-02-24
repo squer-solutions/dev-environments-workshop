@@ -17,6 +17,12 @@ spec:
       containers:
         - name: squer-trading-mock
           image: trading-mock
+          command:
+            - java
+          args:
+            - -jar
+            - -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5006
+            - /home/app/application.jar
           ports:
             - containerPort: 8080
 ---

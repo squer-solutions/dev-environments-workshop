@@ -19,6 +19,12 @@ spec:
           image: trading
           ports:
             - containerPort: 8080
+          command:
+            - java
+          args:
+            - -jar
+            - -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5010
+            - /home/app/application.jar
           env:
             - name: MICRONAUT_ENVIRONMENTS
               value: "local"
@@ -31,6 +37,10 @@ spec:
   selector:
     app: squer-trading
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
       targetPort: 8080
+    - name: debug
+      protocol: TCP
+      port: 5005
