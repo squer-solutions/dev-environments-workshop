@@ -11,7 +11,7 @@ class RedisCommander(network: Network?) : GenericContainer<RedisCommander?>(Dock
         withNetwork(network)
         withNetworkMode("host")
         withEnv("REDIS_HOSTS", "local:redis:6379")
-        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("redis-commander").withName("redis-commander") }
+        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("redis-commander") }
     }
 
     companion object {

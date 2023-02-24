@@ -11,7 +11,7 @@ class Redpanda(network: Network?) : GenericContainer<Redpanda?>(DockerImageName.
         addFixedExposedPort(HOST_PORT, CONTAINER_PORT)
         withNetwork(network)
         withNetworkMode("bridge")
-        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("redpanda").withName("redpanda") }
+        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("redpanda") }
         withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withEntrypoint("/usr/bin/rpk") }
         withCommand("redpanda start --smp 1 --overprovisioned --node-id 0 --kafka-addr PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092 --advertise-kafka-addr PLAINTEXT://redpanda:29092,OUTSIDE://localhost:9092 --pandaproxy-addr 0.0.0.0:8082 --advertise-pandaproxy-addr localhost:8082")
         withExposedPorts(8081, 8082, 9092, 9644, 29092)

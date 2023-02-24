@@ -12,7 +12,7 @@ class Redis(network: Network?) : GenericContainer<Redis?>(DockerImageName.parse(
         withEnv(ENV)
         withNetwork(network)
         withNetworkMode("bridge")
-        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("redis").withName("redis") }
+        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("redis") }
         waitingFor(
                 Wait.forLogMessage(".*Ready to accept connections.*\\n", 1)
         )

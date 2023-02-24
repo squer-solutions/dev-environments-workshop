@@ -11,7 +11,7 @@ class Postgres(network: Network?) : GenericContainer<Postgres?>(DockerImageName.
         withNetwork(network)
         withNetworkMode("bridge")
         withEnv(ENV)
-        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("postgres").withName("postgres") }
+        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("postgres") }
     }
 
     companion object {

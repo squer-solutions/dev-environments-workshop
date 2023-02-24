@@ -6,38 +6,34 @@ import org.testcontainers.containers.Network.newNetwork
 
 fun main() {
 
-    DevEnv().setupDevEnv()
+    DevEnv().setupDevEnv(false)
 
     while (true) {}
 }
 
 class DevEnv {
-    fun setupDevEnv() {
+
+    fun setupDevEnv(isIntegrationTest: Boolean) {
         LOG.info("Creating new shared network...")
         val defaultNetwork = newNetwork()
 
-
-        LOG.info("Initializing containers...")
-        val postgres = Postgres(defaultNetwork)
-        val redis = Redis(defaultNetwork)
-        val redisCommander = RedisCommander(defaultNetwork)
-        val redpanda = Redpanda(defaultNetwork)
-        val redpandaConsole = RedpandaConsole(defaultNetwork)
-        val pricesMock = PricesMock(defaultNetwork)
-
         LOG.info("Starting containers...")
+        val postgres = Postgres(defaultNetwork)
         postgres.start()
-
+        val redis = Redis(defaultNetwork)
         redis.start()
-
-        redisCommander.start()
-
+        val redpanda = Redpanda(defaultNetwork)
         redpanda.start()
         redpanda.createTopics()
 
-        redpandaConsole.start()
-
-        pricesMock.start()
+        if (!isIntegrationTest) {
+            val redisCommander = RedisCommander(defaultNetwork)
+            redisCommander.start()
+            val redpandaConsole = RedpandaConsole(defaultNetwork)
+            redpandaConsole.start()
+            val pricesMock = PricesMock(defaultNetwork)
+            pricesMock.start()
+        }
 
         LOG.info("Setup complete. Containers will shut down on application exit.")
     }

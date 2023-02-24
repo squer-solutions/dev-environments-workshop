@@ -11,7 +11,7 @@ class PricesMock(network: Network?) : GenericContainer<PricesMock?>(DockerImageN
         withEnv("KAFKA_BOOTSTRAP_SERVERS", "redpanda:29092")
         withNetwork(network)
         withNetworkMode("host")
-        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("prices-mock").withName("prices-mock") }
+        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("prices-mock") }
     }
 
     companion object {

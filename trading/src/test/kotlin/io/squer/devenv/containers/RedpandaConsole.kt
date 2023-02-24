@@ -11,7 +11,7 @@ class RedpandaConsole(network: Network?) : GenericContainer<RedpandaConsole?>(Do
         withNetwork(network)
         withNetworkMode("host")
         withEnv(ENV)
-        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("redpanda-console").withName("redpanda-console") }
+        withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withHostName("redpanda-console") }
         withCreateContainerCmdModifier { cmd: CreateContainerCmd -> cmd.withEntrypoint("/bin/sh") }
         withCommand("-c", "echo \"\$CONSOLE_CONFIG_FILE\" > /tmp/config.yml ; cat /tmp/config.yml ; /app/console")
     }
