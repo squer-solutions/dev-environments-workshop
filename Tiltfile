@@ -4,7 +4,6 @@ custom_build(
     'cd trading && pwd && ./gradlew dockerBuild && docker tag trading $EXPECTED_REF',
     deps=['./trading/src']
 );
-
 k8s_yaml('./deploy/trading.yaml')
 k8s_resource('squer-trading', port_forwards=['8080:8080', '5010:5010']) # Remote debugger
 
